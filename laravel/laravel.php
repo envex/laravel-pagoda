@@ -54,7 +54,7 @@ register_shutdown_function(function()
 |--------------------------------------------------------------------------
 |
 | By setting error reporting to -1, we essentially force PHP to report
-| every error, and this is guranteed to show every error on future
+| every error, and this is guaranteed to show every error on future
 | releases of PHP. This allows everything to be fixed early!
 |
 */
@@ -143,7 +143,7 @@ $response->render();
 |--------------------------------------------------------------------------
 |
 | If a session driver has been configured, we will save the session to
-| storage so it is avaiable for the next request. This will also set
+| storage so it is available for the next request. This will also set
 | the session cookie in the cookie jar to be sent to the user.
 |
 */
@@ -172,10 +172,24 @@ $response->send();
 | And We're Done!
 |--------------------------------------------------------------------------
 |
-| Raise the "done" event so extra output can be attached to the response
+| Raise the "done" event so extra output can be attached to the response.
 | This allows the adding of debug toolbars, etc. to the view, or may be
 | used to do some kind of logging by the application.
 |
 */
 
 Event::fire('laravel.done', array($response));
+
+/*
+|--------------------------------------------------------------------------
+| Finish the request for PHP-FastCGI
+|--------------------------------------------------------------------------
+|
+| Stopping the PHP process for PHP-FastCGI users to speed up some
+| PHP queries. Acceleration is possible when there are actions in the
+| process of script execution that do not affect server response.
+| For example, saving the session in memcached can occur after the page
+| has been formed and passed to a web server.
+*/
+
+$response->foundation->finish();
