@@ -13,7 +13,7 @@ class Error {
 	{
 		static::log($exception);
 
-		//ob_get_level() and ob_end_clean();
+		ob_get_level() and ob_end_clean();
 
 		// If detailed errors are enabled, we'll just format the exception into
 		// a simple error message and display it on the screen. We don't use a
@@ -60,7 +60,7 @@ class Error {
 	{
 		if (error_reporting() === 0) return;
 
-		// For a PHP error, we'll create an ErrorExcepetion and then feed that
+		// For a PHP error, we'll create an ErrorException and then feed that
 		// exception to the exception method, which will create a simple view
 		// of the exception details for the developer.
 		$exception = new \ErrorException($error, $code, 0, $file, $line);
@@ -80,7 +80,7 @@ class Error {
 	 */
 	public static function shutdown()
 	{
-		// If a fatal error occured that we have not handled yet, we will
+		// If a fatal error occurred that we have not handled yet, we will
 		// create an ErrorException and feed it to the exception handler,
 		// as it will not yet have been handled.
 		$error = error_get_last();
